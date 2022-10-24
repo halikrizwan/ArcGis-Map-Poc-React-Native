@@ -18,6 +18,10 @@ import com.esri.arcgisruntime.mapping.Viewpoint;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.esri.arcgisruntime.data.ServiceFeatureTable;
+import com.esri.arcgisruntime.layers.FeatureLayer;
+import com.esri.arcgisruntime.layers.ArcGISMapImageLayer;
+import android.os.Bundle;
 
 public class RNCSTMMapManager extends SimpleViewManager<View> {
     public static final String REACT_CLASS = "RNCSTMMap";
@@ -35,20 +39,15 @@ public class RNCSTMMapManager extends SimpleViewManager<View> {
         return REACT_CLASS;
     }
 
-    // @Override
-    // public View createViewInstance(ThemedReactContext context) {
-    // TextView tw = new TextView(context);
-    // tw.setText("Map component will be here");
-    // return tw;
-    // }
-
     @Override
     public View createViewInstance(ThemedReactContext context) {
         ArcGISRuntimeEnvironment.setApiKey(
                 "AAPK40231d9f0d1d45b4aa3839e4c132c485qENxOTNgsiVbCh0lcg96qO6VvJkO-Q7Co-3cQkTFkE0ivog6QaXQ9QjKJnUQb3Ms");
-        ArcGISMap map = new ArcGISMap(BasemapStyle.ARCGIS_TOPOGRAPHIC);
+        ArcGISMapImageLayer mapImageLayer = new ArcGISMapImageLayer(
+                "https://services.gisqatar.org.qa/server/rest/services/Vector/Qatar_StreetMap_Hybrid_E/MapServer");
+        ArcGISMap map = new ArcGISMap();
+        map.getOperationalLayers().add(mapImageLayer);
         mMapView.setMap(map);
-        mMapView.setViewpoint(new Viewpoint(34.056295, -117.195800, 10000));
         return mMapView;
     }
 
